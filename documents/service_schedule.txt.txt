@@ -1,0 +1,30 @@
+VEHICLE SERVICE SCHEDULE
+
+1,000 km Service
+- General inspection
+- Tighten nuts and bolts
+- Inspect brakes
+- Check tire pressure
+- Check chain adjustment
+
+5,000 km Service
+- Replace engine oil
+- Replace oil filter
+- Clean air filter
+- Inspect battery
+- Lubricate chain
+- Check brake pads
+
+10,000 km Service
+- Replace spark plug
+- Replace air filter if required
+- Inspect suspension
+- Check steering bearings
+- Inspect cooling system
+
+20,000 km Service
+- Replace coolant
+- Replace brake fluid
+- Inspect clutch system
+- Inspect fuel system
+- Complete safety inspection
