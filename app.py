@@ -140,11 +140,12 @@ st.markdown(
 st.markdown("##### 💡 Example Questions")
 example_questions = [
     "My motorcycle engine makes a ticking noise on cold startup.",
-    "When should I replace brake pads and flush brake fluid?",
     "My car has reached 40,000 km. What service items are due?",
+    "How much does a full brake pad and rotor replacement cost?",
+    "When should I replace engine oil and filter?",
 ]
 
-cols = st.columns(3)
+cols = st.columns(4)
 for col, sample in zip(cols, example_questions):
     if col.button(sample, use_container_width=True, key=f"btn_{sample[:10]}"):
         st.session_state.question = sample

@@ -7,6 +7,7 @@ logger = logging.getLogger(__name__)
 INTENT_CATEGORIES = {
     "MAINTENANCE_SCHEDULE": "Periodic service, oil change intervals, filter changes, routine checks.",
     "FAULT_DIAGNOSTICS": "Warning lights, abnormal noises, engine performance issues, leaks, starting failures.",
+    "COST_ESTIMATION": "Service price estimates, labor costs, repair quotes, parts replacement pricing.",
     "TECHNICAL_SPEC": "Tire pressure, fluid capacities, battery voltages, oil grades.",
     "WARRANTY_POLICY": "Warranty coverage, terms, claim eligibility, service center policy.",
     "GENERAL_QUERY": "General advice or unclassified vehicle inquiry."
@@ -23,6 +24,7 @@ You are an Intent Classification Agent for a Vehicle Service System.
 Analyze the user's question and classify it into EXACTLY ONE of the following categories:
 - MAINTENANCE_SCHEDULE: {INTENT_CATEGORIES['MAINTENANCE_SCHEDULE']}
 - FAULT_DIAGNOSTICS: {INTENT_CATEGORIES['FAULT_DIAGNOSTICS']}
+- COST_ESTIMATION: {INTENT_CATEGORIES['COST_ESTIMATION']}
 - TECHNICAL_SPEC: {INTENT_CATEGORIES['TECHNICAL_SPEC']}
 - WARRANTY_POLICY: {INTENT_CATEGORIES['WARRANTY_POLICY']}
 - GENERAL_QUERY: {INTENT_CATEGORIES['GENERAL_QUERY']}

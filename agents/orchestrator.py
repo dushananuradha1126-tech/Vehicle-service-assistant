@@ -5,6 +5,7 @@ from agents.intent_agent import classify_intent
 from agents.knowledge_agent import synthesize_knowledge_response
 from agents.diagnostic_agent import analyze_diagnostic_symptoms
 from agents.schedule_agent import calculate_service_schedule
+from agents.cost_agent import estimate_service_cost
 
 logger = logging.getLogger(__name__)
 
@@ -12,7 +13,7 @@ def process_vehicle_query(query: str, vehicle_info: Dict[str, Any] = None) -> Di
     """
     Central Coordinator / Agent Orchestrator.
     1. Classifies user query intent.
-    2. Routes to specialized agents (Diagnostic Agent, Schedule Agent, or Knowledge Agent).
+    2. Routes to specialized agents (Diagnostic Agent, Schedule Agent, Cost Estimator Agent, Knowledge Agent).
     3. Aggregates final answer, agent execution trace, and source documents.
     """
     logger.info(f"Orchestrator received query: '{query}'")
@@ -40,6 +41,10 @@ def process_vehicle_query(query: str, vehicle_info: Dict[str, Any] = None) -> Di
         vtype = vehicle_info.get("type", "Vehicle")
         sched_res = calculate_service_schedule(mileage, vtype)
         primary_response = sched_res.get("checklist", "")
+    elif intent_category == "COST_ESTIMATION":
+        agent_used = "Cost Estimator Agent"
+        cost_res = estimate_service_cost(query, vehicle_info)
+        primary_response = cost_res.get("cost_report", "")
     else:
         # Default or Technical / Warranty query -> Knowledge Agent with RAG
         agent_used = "Knowledge Agent (RAG)"
