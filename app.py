@@ -1,18 +1,17 @@
 import html
-
 import streamlit as st
 
-from utils.groq_client import ask_groq
-
+from agents.orchestrator import process_vehicle_query
+from utils.config import validate_config
 
 st.set_page_config(
-    page_title="Vehicle Service Assistant",
+    page_title="Vehicle Service AI Assistant",
     page_icon="🚗",
     layout="wide",
     initial_sidebar_state="expanded",
 )
 
-
+# Modern Custom CSS Styling
 st.markdown(
     """
     <style>
@@ -24,27 +23,28 @@ st.markdown(
         }
 
         .block-container {
-            max-width: 1100px;
-            padding-top: 1.8rem;
+            max-width: 1150px;
+            padding-top: 1.5rem;
             padding-bottom: 2rem;
         }
 
         .hero {
-            padding: 1.5rem 1.6rem;
+            padding: 1.6rem 1.8rem;
             border-radius: 24px;
-            background: rgba(255, 255, 255, 0.82);
+            background: rgba(255, 255, 255, 0.88);
             border: 1px solid rgba(15, 23, 42, 0.08);
-            box-shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
+            box-shadow: 0 20px 45px rgba(15, 23, 42, 0.06);
             backdrop-filter: blur(14px);
+            margin-bottom: 1.2rem;
         }
 
         .eyebrow {
             display: inline-block;
-            margin-bottom: 0.85rem;
-            padding: 0.35rem 0.75rem;
+            margin-bottom: 0.75rem;
+            padding: 0.35rem 0.85rem;
             border-radius: 999px;
-            background: rgba(15, 118, 110, 0.10);
-            color: #0f766e;
+            background: rgba(37, 99, 235, 0.10);
+            color: #2563eb;
             font-size: 0.82rem;
             font-weight: 700;
             letter-spacing: 0.06em;
@@ -53,235 +53,177 @@ st.markdown(
 
         .hero h1 {
             margin: 0;
-            font-size: clamp(2rem, 4vw, 3rem);
-            line-height: 1.05;
-            letter-spacing: -0.04em;
+            font-size: clamp(2rem, 3.5vw, 2.7rem);
+            line-height: 1.1;
+            letter-spacing: -0.03em;
             color: #0f172a;
         }
 
         .hero p {
-            margin: 0.85rem 0 0;
-            max-width: 760px;
+            margin: 0.75rem 0 0;
+            max-width: 780px;
             color: #475569;
             font-size: 1.02rem;
-            line-height: 1.65;
+            line-height: 1.6;
         }
 
-        .steps {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 0.9rem;
-            margin-top: 1rem;
-        }
-
-        .step-card {
-            padding: 1rem 1rem 1.05rem;
-            border-radius: 18px;
-            background: rgba(255, 255, 255, 0.9);
-            border: 1px solid rgba(15, 23, 42, 0.08);
-        }
-
-        .step-card .num {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 1.8rem;
-            height: 1.8rem;
-            border-radius: 999px;
-            background: linear-gradient(135deg, #2563eb, #0f766e);
-            color: white;
-            font-size: 0.9rem;
+        .agent-badge {
+            display: inline-block;
+            padding: 0.3rem 0.75rem;
+            border-radius: 8px;
+            font-size: 0.82rem;
             font-weight: 700;
-            margin-bottom: 0.65rem;
+            background: #e0e7ff;
+            color: #3730a3;
+            margin-bottom: 0.8rem;
         }
 
-        .step-card h3 {
-            margin: 0 0 0.35rem;
-            font-size: 1rem;
-            color: #0f172a;
-        }
-
-        .step-card p {
-            margin: 0;
-            color: #64748b;
-            font-size: 0.95rem;
-            line-height: 1.55;
-        }
-
-        .section-label {
-            margin: 1.35rem 0 0.6rem;
-            color: #64748b;
-            font-size: 0.84rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-        }
-
-        .example-grid {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 0.75rem;
-        }
-
-        .example-btn {
-            width: 100%;
-            padding: 0.95rem 1rem;
-            border-radius: 16px;
-            border: 1px solid rgba(37, 99, 235, 0.14);
-            background: linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(15, 118, 110, 0.08));
-            color: #0f172a;
-            font-weight: 600;
-            text-align: left;
-        }
-
-        .answer-box {
-            margin-top: 1rem;
-            padding: 1.1rem 1.15rem;
-            border-radius: 20px;
-            background: rgba(255, 255, 255, 0.9);
-            border: 1px solid rgba(15, 23, 42, 0.08);
-            box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
-        }
-
-        .answer-title {
-            margin: 0 0 0.75rem;
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: #0f172a;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-        }
-
-        .answer-content {
-            color: #0f172a;
-            font-size: 1rem;
-            line-height: 1.7;
-            white-space: pre-wrap;
-        }
-
-        .answer-content p,
-        .answer-content li,
-        .answer-content strong,
-        .answer-content em {
-            color: #0f172a;
-        }
-
-        .hint {
-            color: #64748b;
+        .source-card {
+            padding: 0.85rem;
+            border-radius: 12px;
+            background: #f1f5f9;
+            border-left: 4px solid #2563eb;
+            margin-bottom: 0.6rem;
             font-size: 0.92rem;
-            line-height: 1.55;
-        }
-
-        footer {
-            visibility: hidden;
         }
     </style>
     """,
     unsafe_allow_html=True,
 )
 
-
+# Session State Initialization
 if "question" not in st.session_state:
     st.session_state.question = ""
-if "answer" not in st.session_state:
-    st.session_state.answer = ""
+if "query_result" not in st.session_state:
+    st.session_state.query_result = None
 
-
+# Sidebar Vehicle Configuration & Filters
 with st.sidebar:
-    st.markdown("### How to use")
-    st.write("1. Type your vehicle question.")
-    st.write("2. Click **Get Answer**.")
-    st.write("3. Read the practical steps below.")
+    st.image("https://img.icons8.com/color/96/car-service.png", width=70)
+    st.title("Vehicle Specs")
 
-    st.markdown("### Good questions")
-    st.write("• What service do I need at 5000 km?")
-    st.write("• Why is the check engine light on?")
-    st.write("• When should I change engine oil?")
+    v_type = st.selectbox("Vehicle Type", ["Car", "Motorcycle", "SUV / Truck", "EV / Hybrid"])
+    v_make = st.text_input("Make / Brand", placeholder="e.g. Toyota, Honda, Yamaha")
+    v_model = st.text_input("Model", placeholder="e.g. Corolla, Civic, MT-07")
+    v_year = st.number_input("Year", min_value=1990, max_value=2027, value=2020)
+    v_mileage = st.number_input("Current Odometer (km)", min_value=0, max_value=500000, value=35000, step=1000)
 
-    st.markdown("### Tips")
-    st.caption("Include the vehicle type, mileage, and any warning lights for better answers.")
+    st.markdown("---")
+    st.markdown("### System Health")
+    config_status = validate_config()
+    if config_status["groq_key_set"]:
+        st.success("✅ Groq API Connected")
+    else:
+        st.error("⚠️ GROQ_API_KEY Missing")
 
+    if config_status["vectorstore_exists"]:
+        st.success("✅ Vector Store Loaded")
+    else:
+        st.info("ℹ️ Vector Store Pending Ingestion")
 
+# Header Hero Section
 st.markdown(
     """
     <div class="hero">
-        <div class="eyebrow">Vehicle service assistant</div>
-        <h1>A simple way to get help with maintenance and repairs.</h1>
+        <div class="eyebrow">Multi-Agent RAG Assistant</div>
+        <h1>Vehicle Service & Diagnostic System</h1>
         <p>
-            Ask one clear question about your car or motorcycle and get a direct answer.
-            The page is kept simple so it is easy to understand and use.
+            Ask maintenance questions, report mechanical symptoms, or check scheduled service intervals. 
+            Our intelligent multi-agent framework routes your query to domain-specific knowledge experts.
         </p>
-        <div class="steps">
-            <div class="step-card">
-                <div class="num">1</div>
-                <h3>Write your question</h3>
-                <p>Tell us the problem, mileage, or warning light you see.</p>
-            </div>
-            <div class="step-card">
-                <div class="num">2</div>
-                <h3>Choose an example</h3>
-                <p>Use a sample prompt if you are not sure what to ask.</p>
-            </div>
-            <div class="step-card">
-                <div class="num">3</div>
-                <h3>Get a clear answer</h3>
-                <p>Receive a practical response you can act on right away.</p>
-            </div>
-        </div>
     </div>
     """,
     unsafe_allow_html=True,
 )
 
-
-st.markdown('<div class="section-label">Example questions</div>', unsafe_allow_html=True)
-
+# Sample Prompts
+st.markdown("##### 💡 Example Questions")
 example_questions = [
-    "My motorcycle has travelled 5000 km. What service should I do?",
-    "Why is my check engine light on?",
-    "How often should I change engine oil?",
+    "My motorcycle engine makes a ticking noise on cold startup.",
+    "When should I replace brake pads and flush brake fluid?",
+    "My car has reached 40,000 km. What service items are due?",
 ]
 
 cols = st.columns(3)
 for col, sample in zip(cols, example_questions):
-    if col.button(sample, use_container_width=True, key=f"sample_{sample}"):
+    if col.button(sample, use_container_width=True, key=f"btn_{sample[:10]}"):
         st.session_state.question = sample
 
-st.markdown('<div class="section-label">Ask your question</div>', unsafe_allow_html=True)
-
+# Main Input Form
 with st.form("ask_form", clear_on_submit=False):
-    question = st.text_area(
-        "Type your question here",
+    user_query = st.text_area(
+        "Type your vehicle question",
         value=st.session_state.question,
-        placeholder="Example: My car makes a noise when I brake. What should I check?",
-        height=130,
-        label_visibility="collapsed",
+        placeholder="e.g. Why is the engine temperature rising during idle traffic?",
+        height=100,
+        label_visibility="collapsed"
     )
-    submitted = st.form_submit_button("Get Answer")
+    submitted = st.form_submit_button("Ask Assistant 🚀")
 
 if submitted:
-    if not question.strip():
-        st.warning("Please type a question before clicking Get Answer.")
+    if not user_query.strip():
+        st.warning("Please enter a question before submitting.")
     else:
-        st.session_state.question = question.strip()
-        with st.spinner("Thinking..."):
-            try:
-                st.session_state.answer = ask_groq(question.strip())
-            except Exception as exc:
-                st.session_state.answer = f"Error: {exc}"
+        st.session_state.question = user_query.strip()
+        vehicle_spec = {
+            "type": v_type,
+            "make": v_make,
+            "model": v_model,
+            "year": v_year,
+            "mileage": v_mileage
+        }
+        with st.spinner("Routing query through Multi-Agent pipeline..."):
+            res = process_vehicle_query(user_query.strip(), vehicle_spec)
+            st.session_state.query_result = res
 
+# Display Multi-Tab Response Breakdown
+if st.session_state.query_result:
+    res = st.session_state.query_result
 
-if st.session_state.answer:
-    answer_text = html.escape(st.session_state.answer).replace("\n", "<br>")
+    st.markdown("---")
+    badge_color = "#2563eb"
     st.markdown(
         f"""
-        <div class="answer-box">
-            <div class="answer-title">Answer</div>
-            <div class="answer-content">{answer_text}</div>
+        <div class="agent-badge">
+            Routed to: <b>{res['agent_used']}</b> | Intent: <b>{res['intent_category']}</b> (Confidence: {res['confidence'] * 100:.0f}%)
         </div>
         """,
-        unsafe_allow_html=True,
+        unsafe_allow_html=True
     )
-    st.caption("If you want a more accurate answer, add the vehicle model, mileage, and symptoms.")
-else:
-    st.info("Type a question or click one of the examples above to begin.")
+
+    tab_answer, tab_sources, tab_trace = st.tabs(["💬 Response & Advice", "📚 Manual Sources", "🔍 Agent Workflow"])
+
+    with tab_answer:
+        st.markdown(res["primary_answer"])
+        st.caption(f"Targeted for: {v_make or 'Vehicle'} {v_model} ({v_mileage:,} km)")
+
+    with tab_sources:
+        snippets = res.get("snippets", [])
+        if snippets:
+            st.write(f"Retrieved **{len(snippets)}** relevant context snippets from Chroma vector store:")
+            for snip in snippets:
+                st.markdown(
+                    f"""
+                    <div class="source-card">
+                        <b>Source File:</b> {snip['source']} (Relevance Score: {snip['relevance_score']})<br>
+                        <p style="margin-top:0.4rem; color:#334155;">{html.escape(snip['content'])}</p>
+                    </div>
+                    """,
+                    unsafe_allow_html=True
+                )
+        else:
+            st.info("No specific manual snippets retrieved for this question.")
+
+    with tab_trace:
+        st.json({
+            "User Query": res["query"],
+            "Intent Classified": res["intent_category"],
+            "Confidence": res["confidence"],
+            "Agent Routing": res["agent_used"],
+            "Vehicle Specs Passed": {
+                "Make": v_make,
+                "Model": v_model,
+                "Year": v_year,
+                "Mileage": v_mileage
+            }
+        })
