@@ -1,7 +1,13 @@
 import logging
 from typing import List, Dict, Any, Tuple
-from langchain_chroma import Chroma
-from langchain_huggingface import HuggingFaceEmbeddings
+try:
+    from langchain_chroma import Chroma
+except ImportError:
+    from langchain_community.vectorstores import Chroma
+try:
+    from langchain_huggingface import HuggingFaceEmbeddings
+except ImportError:
+    from langchain_community.embeddings import HuggingFaceEmbeddings
 
 from utils.config import (
     VECTORSTORE_DIR,
