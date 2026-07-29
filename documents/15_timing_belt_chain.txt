@@ -1,0 +1,9 @@
+TIMING BELT & TIMING CHAIN GUIDE
+
+1. Timing Belt vs Timing Chain
+- Rubber Timing Belt: Replace every 80,000 to 100,000 km or 5 years.
+- Metal Timing Chain: Designed for vehicle lifetime, but requires tensioner and guide inspection at 150,000 km.
+
+2. Interference Engine Warning
+- On interference engines, timing belt snap causes piston-to-valve collision, damaging cylinder heads and bending valves.
+- Always replace water pump, tensioner pulley, and front oil seals along with timing belt.

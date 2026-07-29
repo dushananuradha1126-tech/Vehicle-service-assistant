@@ -1,0 +1,10 @@
+FUEL INJECTION & PUMP SYSTEM GUIDE
+
+1. Fuel Filter & Injectors
+- Replace inline fuel filter every 30,000 to 40,000 km (if equipped).
+- Clean fuel injectors every 40,000 km to remove carbon deposits.
+
+2. Symptoms of Fuel Delivery Issues
+- Fuel pump whine from rear fuel tank.
+- Engine cranks but fails to start due to loss of fuel pressure.
+- Stuttering or hesitation at high RPM or loaded acceleration.

@@ -1,21 +1,11 @@
 import os
 import logging
+import math
 from pathlib import Path
-from langchain_community.document_loaders import TextLoader
-from langchain_text_splitters import RecursiveCharacterTextSplitter
-try:
-    from langchain_huggingface import HuggingFaceEmbeddings
-except ImportError:
-    from langchain_community.embeddings import HuggingFaceEmbeddings
-try:
-    from langchain_chroma import Chroma
-except ImportError:
-    from langchain_community.vectorstores import Chroma
 
 from utils.config import (
     DOCUMENTS_DIR,
     VECTORSTORE_DIR,
-    EMBEDDING_MODEL_NAME,
     CHUNK_SIZE,
     CHUNK_OVERLAP,
 )
@@ -23,49 +13,87 @@ from utils.config import (
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
 
-def build_vector_store() -> Chroma:
-    """Loads text documents from documents directory and creates vector store."""
+class SimpleDocument:
+    def __init__(self, page_content: str, metadata: dict = None):
+        self.page_content = page_content
+        self.metadata = metadata or {}
+
+class SimpleHashEmbeddings:
+    """Fast, reliable 384-dim hash embedding function."""
+    def __init__(self, dim=384):
+        self.dim = dim
+
+    def _embed_text(self, text: str):
+        vec = [0.0] * self.dim
+        words = text.lower().split()
+        if not words:
+            return vec
+        for word in words:
+            idx = abs(hash(word)) % self.dim
+            vec[idx] += 1.0
+        norm = math.sqrt(sum(x * x for x in vec)) or 1.0
+        return [x / norm for x in vec]
+
+    def embed_documents(self, texts: list[str]):
+        return [self._embed_text(t) for t in texts]
+
+    def embed_query(self, text: str):
+        return self._embed_text(text)
+
+def split_text_to_chunks(text: str, chunk_size: int = 500, overlap: int = 100) -> list[str]:
+    """Splits raw text into overlapping chunks."""
+    if not text:
+        return []
+    chunks = []
+    start = 0
+    while start < len(text):
+        end = min(start + chunk_size, len(text))
+        chunks.append(text[start:end])
+        if end == len(text):
+            break
+        start += (chunk_size - overlap)
+    return chunks
+
+def build_vector_store():
+    """Ingests all .txt document manuals and creates a vector store."""
     logger.info("Initializing document ingestion pipeline...")
     
     if not DOCUMENTS_DIR.exists():
         logger.error(f"Documents directory not found at: {DOCUMENTS_DIR}")
         raise FileNotFoundError(f"Directory not found: {DOCUMENTS_DIR}")
 
-    raw_documents = []
     txt_files = list(DOCUMENTS_DIR.glob("*.txt"))
-
     if not txt_files:
         logger.warning(f"No .txt documents found in {DOCUMENTS_DIR}")
         return None
 
+    raw_chunks = []
     for file_path in txt_files:
         try:
-            loader = TextLoader(str(file_path), encoding="utf-8")
-            loaded_docs = loader.load()
-            for doc in loaded_docs:
-                doc.metadata["source_name"] = file_path.name
-                doc.metadata["category"] = file_path.stem
-            raw_documents.extend(loaded_docs)
-            logger.info(f"Loaded: {file_path.name}")
+            content = file_path.read_text(encoding="utf-8")
+            text_chunks = split_text_to_chunks(content, CHUNK_SIZE, CHUNK_OVERLAP)
+            for chunk_text in text_chunks:
+                doc = SimpleDocument(
+                    page_content=chunk_text,
+                    metadata={"source_name": file_path.name, "category": file_path.stem}
+                )
+                raw_chunks.append(doc)
+            logger.info(f"Loaded {len(text_chunks)} chunks from: {file_path.name}")
         except Exception as exc:
             logger.error(f"Failed to load {file_path.name}: {exc}")
 
-    logger.info(f"Total documents loaded: {len(raw_documents)}")
+    logger.info(f"Total document chunks created: {len(raw_chunks)} from {len(txt_files)} files.")
 
-    text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=CHUNK_SIZE,
-        chunk_overlap=CHUNK_OVERLAP,
-        separators=["\n\n", "\n", " ", ""]
-    )
-    chunks = text_splitter.split_documents(raw_documents)
-    logger.info(f"Created {len(chunks)} text chunks.")
+    try:
+        from langchain_chroma import Chroma
+    except ImportError:
+        from langchain_community.vectorstores import Chroma
 
-    logger.info(f"Generating embeddings using model: {EMBEDDING_MODEL_NAME}")
-    embeddings = HuggingFaceEmbeddings(model_name=EMBEDDING_MODEL_NAME)
+    embeddings = SimpleHashEmbeddings()
 
     logger.info(f"Building ChromaDB vector database at: {VECTORSTORE_DIR}")
     vector_db = Chroma.from_documents(
-        documents=chunks,
+        documents=raw_chunks,
         embedding=embeddings,
         persist_directory=str(VECTORSTORE_DIR)
     )

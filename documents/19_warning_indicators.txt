@@ -1,0 +1,13 @@
+OBD-II DIAGNOSTIC CODES & DASHBOARD WARNING LIGHTS GUIDE
+
+1. Dashboard Warning Symbols
+- Red Oil Can: Critical low engine oil pressure. Stop engine immediately.
+- Red Battery: Alternator charging system failure.
+- Red Temperature Light: Engine overheating. Pull over safely.
+- Amber Check Engine Light: Powertrain emission fault detected.
+
+2. Common OBD-II Trouble Codes
+- P0300: Random / Multiple cylinder misfire.
+- P0171: System too lean (Air leak or dirty MAF sensor).
+- P0420: Catalytic converter system efficiency below threshold.
+- P0128: Coolant thermostat operating below regulating temperature.

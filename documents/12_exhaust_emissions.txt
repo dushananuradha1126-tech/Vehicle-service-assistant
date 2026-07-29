@@ -1,0 +1,11 @@
+EXHAUST & EMISSIONS CONTROL GUIDE
+
+1. Catalytic Converter & Oxygen Sensors
+- Upstream and downstream O2 sensors monitor air-fuel ratio and converter efficiency.
+- Expected O2 sensor lifespan: 100,000 km.
+
+2. Exhaust Leak & Emission Symptoms
+- Loud sputtering sound under acceleration.
+- Exhaust odor inside vehicle cabin (CO hazard).
+- Check engine light code P0420 (Catalytic converter efficiency below threshold).
+- Rotten egg sulfur smell indicating rich fuel mixture or failed converter.

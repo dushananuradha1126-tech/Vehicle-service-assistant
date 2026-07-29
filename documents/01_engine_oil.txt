@@ -1,0 +1,20 @@
+ENGINE OIL & LUBRICATION MANUAL
+
+1. Overview & Purpose
+Engine oil is critical for lubricating moving engine components, cooling heat-prone areas, preventing friction wear, and sealing piston rings.
+
+2. Change Intervals & Recommended Grades
+- Synthetic Oil: Every 7,500 - 10,000 km (or 12 months)
+- Semi-Synthetic Oil: Every 5,000 - 7,500 km
+- Mineral Oil: Every 3,000 - 5,000 km
+- Filter Replacement: Always replace oil filter with every oil change.
+
+3. Viscosity Ratings (SAE Standards)
+- 5W-30: Common for modern gasoline engines in moderate temperatures.
+- 0W-20: Fuel-efficient low-viscosity synthetic oil for modern engines.
+- 10W-40: Used for motorcycles and high-mileage engines.
+
+4. Symptoms of Low or Degraded Oil
+- Metallic knocking noise from engine head.
+- Oil pressure warning light illuminated on dashboard.
+- Black, sludge-like oil texture on dipstick.

@@ -1,0 +1,10 @@
+WHEEL BEARING & HUB ASSEMBLY DIAGNOSTICS
+
+1. Function & Design
+- Sealed wheel bearings allow low-friction rotation of road wheels while supporting vehicle weight.
+
+2. Failure Symptoms
+- Humming, growling, or roaring noise that increases with vehicle speed.
+- Noise gets louder when leaning into a turn.
+- Play or looseness in wheel when tested on jack stands.
+- ABS sensor warning light triggered by magnetic tone ring corruption.

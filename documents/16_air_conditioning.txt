@@ -1,0 +1,9 @@
+AUTOMOTIVE AIR CONDITIONING & CLIMATE CONTROL MANUAL
+
+1. Refrigerant Standards
+- R134a / R1234yf Refrigerant: Check pressure levels every 2 years.
+
+2. Symptoms of Climate Control Faults
+- AC blowing warm air (Low refrigerant, leaky condenser, or faulty compressor clutch).
+- Clicking sound from engine bay as AC clutch constantly cycles on and off.
+- Water leaking onto passenger carpet (Clogged AC evaporator drain tube).

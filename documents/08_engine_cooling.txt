@@ -1,0 +1,10 @@
+ENGINE COOLING & RADIATOR SYSTEM GUIDE
+
+1. Coolant Specifications
+- Ethylene Glycol / OAT Coolant: Flush and refill every 40,000 km or 3 years.
+- Mixing 50/50 coolant with distilled water prevents boiling and freezing.
+
+2. Overheating Troubleshooting
+- High Temperature Gauge Reading: Indicates stuck thermostat, failed water pump, low coolant, or radiator fan failure.
+- Sweet Burnt Odor: Indicates coolant leak from hoses or head gasket.
+- White Steam from Exhaust: Indicates blown head gasket leaking coolant into combustion chamber.

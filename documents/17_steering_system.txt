@@ -1,0 +1,10 @@
+POWER STEERING & RACK AND PINION GUIDE
+
+1. Power Steering Fluid Flush
+- Replace power steering fluid every 40,000 to 50,000 km.
+- Electric Power Steering (EPS): Uses electric motor instead of hydraulic pump.
+
+2. Diagnostic Symptoms
+- Whining noise when turning steering wheel (Low hydraulic fluid or failing power steering pump).
+- Heavy steering effort at low parking speeds.
+- Fluid puddle underneath rack and pinion inner tie rod boots.

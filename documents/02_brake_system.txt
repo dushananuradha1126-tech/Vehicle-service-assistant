@@ -1,0 +1,15 @@
+BRAKE SYSTEM MAINTENANCE & DIAGNOSTICS MANUAL
+
+1. Brake Fluid Specifications
+- DOT 3 / DOT 4 Fluid: Replace every 2 years or 20,000 km.
+- Hygroscopic Property: Brake fluid absorbs atmospheric moisture over time, lowering boiling point and causing spongy pedal feel.
+
+2. Brake Pad Inspection
+- Safe Minimum Thickness: 3.0 mm. Replace pads immediately if below 2.0 mm.
+- Squealing Sound: Indicates wear indicator tab contacting brake rotor disc.
+- Grinding Noise: Severe metal-on-metal wear damaging rotors.
+
+3. ABS System Diagnostics
+- Spongy Pedal: Indicates air trapped in hydraulic lines (bleed required).
+- Vehicle Pulls to Side: Seized caliper piston or uneven pad wear.
+- ABS Light: Faulty wheel speed sensor or low fluid reservoir level.

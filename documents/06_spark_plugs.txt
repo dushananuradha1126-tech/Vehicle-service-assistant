@@ -1,0 +1,12 @@
+SPARK PLUGS & IGNITION SYSTEM GUIDE
+
+1. Spark Plug Types & Intervals
+- Standard Copper Plug: Replace every 20,000 to 30,000 km.
+- Platinum Plug: Replace every 60,000 to 80,000 km.
+- Iridium Plug: Replace every 100,000 km.
+
+2. Diagnostic Symptoms of Faulty Spark Plugs
+- Engine misfire (Rough idle and stuttering under acceleration).
+- Increased fuel consumption.
+- Hard starting, especially in cold weather.
+- Check engine light flashing with P0300 misfire codes.

@@ -1,0 +1,10 @@
+MANUAL CLUTCH SYSTEM DIAGNOSTICS MANUAL
+
+1. Clutch Components
+- Friction disc, pressure plate, throwout bearing, flywheel, and hydraulic slave cylinder.
+
+2. Symptoms of Clutch Wear
+- Clutch slipping (Engine RPM increases under acceleration without vehicle speeding up).
+- Burning friction odor after climbing steep hills.
+- High pedal engagement point or hard gear shifting.
+- Grinding noise when depressing clutch pedal (worn throwout bearing).

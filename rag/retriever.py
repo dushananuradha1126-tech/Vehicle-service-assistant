@@ -1,17 +1,9 @@
 import logging
-from typing import List, Dict, Any, Tuple
-try:
-    from langchain_chroma import Chroma
-except ImportError:
-    from langchain_community.vectorstores import Chroma
-try:
-    from langchain_huggingface import HuggingFaceEmbeddings
-except ImportError:
-    from langchain_community.embeddings import HuggingFaceEmbeddings
+from typing import List, Dict, Any
+from rag.ingest import SimpleHashEmbeddings
 
 from utils.config import (
     VECTORSTORE_DIR,
-    EMBEDDING_MODEL_NAME,
     TOP_K_RESULTS
 )
 
@@ -19,16 +11,21 @@ logger = logging.getLogger(__name__)
 
 _vector_db = None
 
-def get_vector_store() -> Chroma:
+def get_vector_store():
     """Lazy loader for ChromaDB instance."""
     global _vector_db
     if _vector_db is None:
+        try:
+            from langchain_chroma import Chroma
+        except ImportError:
+            from langchain_community.vectorstores import Chroma
+
+        embedding = SimpleHashEmbeddings()
         if not VECTORSTORE_DIR.exists():
             logger.warning(f"Vectorstore directory not found at {VECTORSTORE_DIR}. Building new store.")
             from rag.ingest import build_vector_store
             _vector_db = build_vector_store()
         else:
-            embedding = HuggingFaceEmbeddings(model_name=EMBEDDING_MODEL_NAME)
             _vector_db = Chroma(
                 persist_directory=str(VECTORSTORE_DIR),
                 embedding_function=embedding
