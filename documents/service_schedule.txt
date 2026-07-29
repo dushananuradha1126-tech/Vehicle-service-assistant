@@ -1,0 +1,25 @@
+VEHICLE SERVICE SCHEDULE & MILEAGE CHECKLIST
+
+1. 5,000 km / 6 Months Service:
+- Change engine oil and replace oil filter.
+- Inspect tire tread depth and adjust air pressure (PSI).
+- Inspect fluid levels (windshield washer, brake fluid, coolant).
+- Check exterior lighting, turn signals, and horn.
+
+2. 10,000 km / 12 Months Service:
+- Rotate tires for even tread wear.
+- Replace engine air filter and cabin air filter.
+- Inspect front and rear brake pads and rotors.
+- Lubricate door hinges, latches, and suspension points.
+
+3. 20,000 km / 2 Years Service:
+- Replace spark plugs (standard spark plugs).
+- Flush and replace brake fluid.
+- Inspect suspension bushings, ball joints, and tie rod ends.
+- Test battery state of health and alternator charging voltage.
+
+4. 40,000 km / 4 Years Service:
+- Flush engine coolant / radiator fluid.
+- Service transmission fluid and differential fluid.
+- Inspect drive belts and replace serpentine belt if cracked.
+- Clean fuel injectors and throttle body.

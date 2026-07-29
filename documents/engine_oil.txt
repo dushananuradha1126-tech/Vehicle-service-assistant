@@ -1,0 +1,20 @@
+ENGINE OIL & LUBRICATION MANUAL
+
+1. Overview & Purpose
+Engine oil is critical for lubricating moving engine components, cooling heat-prone areas, preventing friction wear, and sealing piston rings.
+
+2. Change Intervals & Recommended Grades
+- Synthetic Oil: Every 7,500 - 10,000 km (or 12 months)
+- Semi-Synthetic Oil: Every 5,000 - 7,500 km
+- Mineral Oil: Every 3,000 - 5,000 km
+- Filter Replacement: Always replace oil filter with every oil change.
+
+3. Symptoms of Low / Degraded Engine Oil
+- Metallic knocking or ticking noise from valve train.
+- Low oil pressure warning light (Red oil can symbol).
+- Dark black texture with burnt odor on dipstick.
+- Overheating engine during normal operation.
+
+4. Inspection Procedure
+- Park vehicle on level surface and let engine cool down for 5-10 minutes.
+- Pull out dipstick, wipe clean, re-insert fully, and check oil level between MIN and MAX marks.

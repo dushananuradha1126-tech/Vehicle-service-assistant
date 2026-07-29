@@ -1,0 +1,15 @@
+BRAKE SYSTEM MAINTENANCE & DIAGNOSTICS GUIDE
+
+1. Brake Fluid Standards & Intervals
+- Dot 3 / Dot 4 Fluid: Flush every 2 years or 20,000 km.
+- Moisture Absorption: Brake fluid is hygroscopic and absorbs water, leading to spongy pedal feel and reduced stopping power.
+
+2. Brake Pad Inspection
+- Minimum Safe Thickness: 3 mm. Replace pads immediately if below 2 mm.
+- Squealing Noise: Indicates wear indicator tab touching rotor.
+- Grinding Noise: Metal-on-metal wear. Rotors must be resurfaced or replaced.
+
+3. ABS & Hydraulic Symptoms
+- Spongy Brake Pedal: Air bubbles in hydraulic lines requiring brake bleeding.
+- Vehicle Pulls to One Side: Seized caliper piston or uneven pad wear.
+- ABS Warning Light: Faulty wheel speed sensor, pump relay, or low fluid level.

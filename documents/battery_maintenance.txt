@@ -1,0 +1,17 @@
+BATTERY & ELECTRICAL DIAGNOSTICS GUIDE
+
+1. Battery Voltage Standards
+- Rest Voltage (Engine OFF): 12.6V to 12.8V (100% state of charge).
+- Crank Voltage (Starting): Should not drop below 9.6V.
+- Charging Voltage (Engine Running @ 2000 RPM): 13.8V to 14.5V (Alternator output).
+
+2. Symptoms of Weak Battery / Alternator Failure
+- Slow engine crank when turning ignition key.
+- Clicking sound from starter solenoid without engine turn over.
+- Dimming headlights at idle that brighten when accelerating.
+- Battery warning light (Red battery symbol) illuminated while driving.
+
+3. Maintenance Recommendations
+- Clean battery terminals with baking soda solution to remove blue/white corrosion.
+- Ensure terminal clamps are tightly torqued.
+- Average battery lifespan: 3 to 5 years.
