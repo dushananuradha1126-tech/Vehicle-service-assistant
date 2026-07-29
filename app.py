@@ -108,18 +108,7 @@ with st.sidebar:
     v_year = st.number_input("Year", min_value=1990, max_value=2027, value=2020)
     v_mileage = st.number_input("Current Odometer (km)", min_value=0, max_value=500000, value=35000, step=1000)
 
-    st.markdown("---")
-    st.markdown("### System Health")
-    config_status = validate_config()
-    if config_status["groq_key_set"]:
-        st.success("✅ Groq API Connected")
-    else:
-        st.error("⚠️ GROQ_API_KEY Missing")
 
-    if config_status["vectorstore_exists"]:
-        st.success("✅ Vector Store Loaded")
-    else:
-        st.info("ℹ️ Vector Store Pending Ingestion")
 
 # Header Hero Section
 st.markdown(
