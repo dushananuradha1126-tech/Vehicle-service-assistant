@@ -15,10 +15,15 @@ class TestVehicleAgents(unittest.TestCase):
 
     @patch("utils.groq_client.ask_groq")
     def test_orchestrator_routing(self, mock_ask_groq):
-        mock_ask_groq.return_value = '{"intent": "FAULT_DIAGNOSTICS", "confidence": 0.9, "reasoning": "Brake issue"}'
+        mock_ask_groq.side_effect = [
+            '{"intent": "FAULT_DIAGNOSTICS", "confidence": 0.9, "reasoning": "Brake issue"}',
+            '### Diagnostic Summary\nPossible air in hydraulic line.',
+            '### RAG Synthesis\nFlush brake fluid every 2 years.'
+        ]
         res = process_vehicle_query("Spongy brakes", {"make": "Honda", "mileage": 20000})
         self.assertIn("status", res)
         self.assertEqual(res["status"], "success")
+        self.assertEqual(res["intent_category"], "FAULT_DIAGNOSTICS")
 
 if __name__ == "__main__":
     unittest.main()
